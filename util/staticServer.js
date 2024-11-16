@@ -11,7 +11,7 @@ const mimeTypes = {
   ".png": "image/png",
 };
 
-function serverStaticFile(req, res) {
+export function serverStaticFile(req, res) {
   const baseURL = req.protocol + "://" + req.headers.host + "/";
   const parsedURL = new URL(req.url, baseURL);
   console.log(parsedURL);
@@ -46,5 +46,3 @@ function serverStaticFile(req, res) {
     res.end("File not found");
   }
 }
-
-module.exports = { serverStaticFile };
