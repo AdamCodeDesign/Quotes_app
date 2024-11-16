@@ -1,5 +1,4 @@
-import { MongoClient as _MongoClient } from "mongodb";
-const MongoClient = _MongoClient;
+import { MongoClient } from "mongodb";
 
 export default (function () {
   const url = "mongodb://127.0.0.1:27017";
