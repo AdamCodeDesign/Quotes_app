@@ -31,12 +31,20 @@ export function getAll() {
 export function getById(id) {
   return new Promise(async (resolve, reject) => {
     const collection = await MongoSingleton.getCollection();
-    const result = await collection.findOne({ _id: ObjectId(id) });
 
-    if (result) {
-      resolve(result);
+    if (ObjectId.isValid(id)) {
+      try {
+        const result = await collection.findOne({ _id: new ObjectId(id) });
+        if (result) {
+          resolve(result);
+        } else {
+          reject(new Error("Document not found"));
+        }
+      } catch (error) {
+        reject(error);
+      }
     } else {
-      reject("Could not get quote by Id:" + id);
+      reject(new Error("Invalid ID format"));
     }
   });
 }
