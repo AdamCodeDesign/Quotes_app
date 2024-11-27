@@ -1,4 +1,4 @@
-import MongoSingleton from "../data/mongoDbSIngleton";
+import MongoSingleton from "../data/mongoDbSIngleton.js";
 import { ObjectId } from "mongodb";
 
 export function saveAll(quotes) {
@@ -17,7 +17,7 @@ export function saveAll(quotes) {
 export function getAll() {
   return new Promise(async (resolve, reject) => {
     const collection = await MongoSingleton.getCollection();
-    const cursor = await collection.find();
+    const cursor = collection.find();
     const results = await cursor.toArray();
 
     if (results.length > 0) {

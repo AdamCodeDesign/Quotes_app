@@ -1,4 +1,4 @@
-import { getAll, getById, saveAll } from "../model/quoteModel";
+import { getAll, getById, saveAll } from "../model/quoteModel.js";
 
 export async function getQuotes() {
   try {

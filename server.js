@@ -4,13 +4,15 @@ import {
   getQuotes,
   getRandom,
   prepareDB,
-} from "./controllers/quoteController";
-import { serverStaticFile } from "./util/staticServer";
+} from "./controllers/quoteController.js";
+import { serverStaticFile } from "./util/staticServer.js";
 
 const PORT = 8080;
 const APP_CONTENT_TYPE = { "Content-Type": "application/json" };
 const server = http.createServer(async function (req, res) {
   console.log("Request");
+
+  prepareDB();
 
   if (req.url === "/api/quotes" && req.method === "GET") {
     const quotes = await getQuotes();

@@ -11,7 +11,7 @@ export default (function () {
       if (client) return resolve(client);
 
       try {
-        client = new MongoClient(url);
+        client = await new MongoClient(url);
         await client.connect();
 
         db = client.db("quotesDB");
@@ -32,6 +32,7 @@ export default (function () {
 
   async function getCollection() {
     if (!collection) await getInstance();
+    console.log("Collection instance:", collection);
     return collection;
   }
 
