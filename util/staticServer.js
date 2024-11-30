@@ -1,8 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { URL } from 'url';
-
-
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const mimeTypes = {
   ".html": "text/html",
@@ -13,34 +11,36 @@ const mimeTypes = {
   ".png": "image/png",
 };
 
+// Konwersja import.meta.url na absolutną ścieżkę
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export function serverStaticFile(req, res) {
-  const baseURL = req.protocol + "://" + req.headers.host + "/";
+  const baseURL = `${req.protocol}://${req.headers.host}/`;
   const parsedURL = new URL(req.url, baseURL);
-  // console.log(parsedURL);
-  const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-  let pathSanitize = path.normalize(parsedURL.pathname);
-  // console.log("pathSanitize: ", pathSanitize);
-  // console.log("__dirname: ", __dirname);
+  let pathname = path.join(__dirname, "..", "static", path.normalize(parsedURL.pathname));
 
-  let pathname = path.join(__dirname, "..", "static", pathSanitize);
+  console.log("Checking file:", pathname);
 
-  ///Users/adam/Desktop/frontend/NodeJs Course/NodeJs/Random_Joke/static/app.js
-  // console.log("pathname: ", pathname);
+  // Upewnij się, że ścieżka jest absolutna
+  pathname = path.resolve(pathname);
+
+  if (fs.existsSync(pathname) && fs.statSync(pathname).isDirectory()) {
+    pathname = path.join(pathname, "index.html");
+  }
+
+  console.log("Final Pathname:", pathname);
 
   if (fs.existsSync(pathname)) {
-    if (fs.statSync(pathname).isDirectory()) {
-      pathname += "/index.html";
-    }
-
-    fs.readFile(pathname, function (err, data) {
+    fs.readFile(pathname, (err, data) => {
       if (err) {
         res.statusCode = 500;
-        res.end("File not found: " + err);
+        res.end(`Error reading file: ${err}`);
       } else {
-        const extension = path.parse(pathname).ext;
+        const extension = path.extname(pathname).toLowerCase();
+        const mimeType = mimeTypes[extension] || "application/octet-stream";
 
-        res.setHeader("Content-type", mimeTypes[extension]);
+        res.setHeader("Content-Type", mimeType);
         res.end(data);
       }
     });
