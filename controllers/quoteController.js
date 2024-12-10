@@ -1,4 +1,11 @@
-import { getAll, getById, saveAll } from "../model/quoteModel.js";
+import {
+  getAll,
+  getById,
+  saveAll,
+  deleteById,
+  updateById,
+  insertOne,
+} from "../model/quoteModel.js";
 
 export async function getQuotes() {
   try {
@@ -86,6 +93,37 @@ export async function prepareDB() {
       await saveAll(quotesArr);
     } else {
       return quotes;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+export async function deleteQuoteById(id) {
+  try {
+    const result = await deleteById(id);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function updateQuoteById(id, quote) {
+  try {
+    const result = await updateById(id, quote);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function insertQuote(quote) {
+  try {
+    const result = await insertOne(quote);
+    if (result && result.insertedId) {
+      return result;
+    } else {
+      return null;
     }
   } catch (error) {
     console.log(error);
