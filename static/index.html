@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="lightbox">
+      <div id="editor">
+        <div class="form-container">
+          <form>
+            <input
+              type="text"
+              name=""
+              id="new-quote-text"
+              placeholder="Quote" />
+            <input
+              type="text"
+              name=""
+              id="new-quote-author"
+              placeholder="Author" />
+            <button id="add-new-quote">Add new quote</button>
+          </form>
+        </div>
+        <ul class="quotes-list">
+          <li>
+            <div class="quote-list-item">Author1: Quote...</div>
+            <div class="quote-list-item-delete">
+              <a href="#" quote-id="sdkjhfbvsjd">X</a>
+            </div>
+          </li>
+          <li>
+            <div class="quote-list-item">Author2: Quote...</div>
+            <div class="quote-list-item-delete">
+              <a href="#" quote-id="sdkjhfbvsjd">X</a>
+            </div>
+          </li>
+          <li>
+            <div class="quote-list-item">Author3: Quote...</div>
+            <div class="quote-list-item-delete">
+              <a href="#" quote-id="sdkjhfbvsjd">X</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div id="quote-container" class="quote-container">
       <div class="quote-text">
         <span id="quote"></span>
