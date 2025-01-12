@@ -102,8 +102,9 @@ export async function prepareDB() {
 export async function deleteQuoteById(id) {
   try {
     const result = await deleteById(id);
+    return result;
   } catch (error) {
-    console.log(error);
+    console.log(error, "tu jest cos nie tak");
     return null;
   }
 }

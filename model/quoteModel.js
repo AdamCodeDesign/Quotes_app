@@ -44,7 +44,7 @@ export function getById(id) {
         reject(error);
       }
     } else {
-      reject(new Error("Invalid ID format"));
+      reject(new Error("Invalid ID format" + id));
     }
   });
 }
@@ -53,11 +53,13 @@ export function deleteById(id) {
   return new Promise(async (resolve, reject) => {
     const collection = await MongoSingleton.getCollection();
     const result = await collection.deleteMany({ _id: new ObjectId(id) });
+    console.log("Delete result inside deleteById:", result); 
+
 
     if (result && result.deletedCount > 0) {
       resolve(result);
     } else {
-      reject("Can not find this quote by ID" + id);
+      reject("Can not find this quote by ID: " + id);
     }
   });
 }
@@ -81,6 +83,10 @@ export function updateById(id, updateFields) {
 export function insertOne(quote) {
   return new Promise(async (resolve, reject) => {
     const collection = await MongoSingleton.getCollection();
+    if (quote._id) {
+      delete quote._id;
+    }
+
     const result = await collection.insertOne(quote);
 
     if (result && result.insertedId) {

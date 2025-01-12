@@ -85,9 +85,11 @@ body {
   background: white;
   color: black;
 }
-
+#editor .form-container {
+  display: flex;
+  justify-content: center;
+}
 #editor .form-container form {
-  margin-top: 20px;
   width: 100%;
   display: flex;
   flex-direction: row;
